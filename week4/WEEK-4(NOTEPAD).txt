@@ -1,0 +1,659 @@
+WEEK-4
+ TASK 1:DETERMINE IF STRING HALVES ARE ALIKE
+You are given a string s of even length. Split this string into two halves of equal lengths, and let a be the first half and b be the second half.
+
+Two strings are alike if they have the same number of vowels ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'). Notice that s contains uppercase and lowercase letters.
+
+Return true if a and b are alike. Otherwise, return false.
+
+ 
+
+Example 1:
+
+Input: s = "book"
+Output: true
+Explanation: a = "bo" and b = "ok". a has 1 vowel and b has 1 vowel. Therefore, they are alike.
+Example 2:
+
+Input: s = "textbook"
+Output: false
+Explanation: a = "text" and b = "book". a has 1 vowel whereas b has 2. Therefore, they are not alike.
+Notice that the vowel o is counted twice.
+
+SOLUTION:
+class Solution {
+
+    public boolean halvesAreAlike(String s) {
+        int mid = s.length() / 2;
+        int count = 0;
+
+        for (int i = 0; i < mid; i++) {
+            if (isVowel(s.charAt(i))) count++;
+            if (isVowel(s.charAt(i + mid))) count--;
+        }
+
+        return count == 0;
+    }
+
+    private boolean isVowel(char c) {
+        return "aeiouAEIOU".indexOf(c) != -1;
+    }
+}
+
+
+ TASK 2:Lapindromes
+Lapindrome is defined as a string which when split in the middle, gives two halves having the same characters and same frequency of each character. If there are odd number of characters in the string, we ignore the middle character and check for lapindrome. For example gaga is a lapindrome, since the two halves ga and ga have the same characters with same frequency. Also, abccab, rotor and xyzxy are a few examples of lapindromes. Note that abbaab is NOT a lapindrome. The two halves contain the same characters but their frequencies do not match.
+Your task is simple. Given a string, you need to tell if it is a lapindrome.
+
+Input:
+First line of input contains a single integer
+T
+, the number of test cases.
+Each test is a single line containing a string
+S
+composed of only lowercase English alphabet.
+Output:
+For each test case, output on a separate line: "YES" if the string is a lapindrome and "NO" if it is not.
+Constraints:
+1 ≤ T ≤ 100
+2 ≤ |S| ≤ 1000, where |S| denotes the length of S
+Sample 1:
+Input
+Output
+6
+gaga
+abcde
+rotor
+xyzxy
+abbaab
+ababc
+YES
+NO
+YES
+YES
+NO
+NO
+Did you like the problem statement?
+124 users found this helpful
+More Info
+Time limit1 secs
+Memory limit1.5 GB
+Source Limit50000 Bytes
+
+SOLUTION:
+import java.util.*;
+
+class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int T = sc.nextInt();
+        while (T-- > 0) {
+            String s = sc.next();
+            System.out.println(isLapindrome(s) ? "YES" : "NO");
+        }
+
+        sc.close();
+    }
+
+    static boolean isLapindrome(String s) {
+        int n = s.length();
+        int mid = n / 2;
+
+        int[] left = new int[26];
+        int[] right = new int[26];
+
+        // count left half
+        for (int i = 0; i < mid; i++) {
+            left[s.charAt(i) - 'a']++;
+        }
+
+        // count right half (skip middle if odd)
+        for (int i = (n % 2 == 0 ? mid : mid + 1); i < n; i++) {
+            right[s.charAt(i) - 'a']++;
+        }
+
+        return Arrays.equals(left, right);
+    }
+}
+
+TASK 3:
+Compare the Triplets:
+Alice and Bob each created one problem for HackerRank. A reviewer rates the two challenges, awarding points on a scale from 1 to 100 for three categories: problem clarity, originality, and difficulty.
+
+The rating for Alice's challenge is the triplet a = (a[0], a[1], a[2]), and the rating for Bob's challenge is the triplet b = (b[0], b[1], b[2]).
+
+The task is to calculate their comparison points by comparing each category:
+
+If a[i] > b[i], then Alice is awarded 1 point.
+If a[i] < b[i], then Bob is awarded 1 point.
+If a[i] = b[i], then neither person receives a point.
+Example
+
+a = [1, 2, 3]
+b = [3, 2, 1]
+
+For elements *0*, Bob is awarded a point because a[0] < b[0].
+For the equal elements a[1] and b[1], no points are earned.
+Finally, for elements 2, a[2] > b[2] so Alice receives a point.
+The return array is [1, 1] with Alice's score first and Bob's second.
+
+Function Description
+
+Complete the function compareTriplets with the following parameter(s):
+
+int a[3]: Alice's challenge rating
+int b[3]: Bob's challenge rating
+Returns
+
+int[2]: the first element is Alice's score and the second is Bob's score
+Input Format
+
+The first line contains 3 space-separated integers, a[0], a[1], and a[2], the respective values in triplet a.
+The second line contains 3 space-separated integers, b[0], b[1], and b[2], the respective values in triplet b.
+
+Constraints
+
+1 ≤ a[i] ≤ 100
+1 ≤ b[i] ≤ 100
+Sample Input 0
+
+5 6 7
+3 6 10
+Sample Output 0
+
+1 1
+
+SOLUTION:
+class Result {
+
+    /*
+     * Complete the 'compareTriplets' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts following parameters:
+     *  1. INTEGER_ARRAY a
+     *  2. INTEGER_ARRAY b
+     */
+
+public static List<Integer> compareTriplets(List<Integer> a, List<Integer> b) {
+    int alice = 0;
+    int bob = 0;
+
+    for (int i = 0; i < 3; i++) {
+        if (a.get(i) > b.get(i)) {
+            alice++;
+        } else if (a.get(i) < b.get(i)) {
+            bob++;
+        }
+    }
+
+    return Arrays.asList(alice, bob);
+}
+
+    }
+
+TASK:4
+CONTAINS DUPLICANTS:
+Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3,1]
+
+Output: true
+
+Explanation:
+
+The element 1 occurs at the indices 0 and 3.
+
+Example 2:
+
+Input: nums = [1,2,3,4]
+
+Output: false
+
+Explanation:
+
+All elements are distinct.
+
+Example 3:
+
+Input: nums = [1,1,1,3,3,4,3,2,4,2]
+
+Output: true
+
+SOLUTION:
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+
+        for (int num : nums) {
+            if (set.contains(num)) {
+                return true;
+            }
+            set.add(num);
+        }
+
+        return false;
+    }
+}
+
+
+TASK5:
+TIME CONVERSION:
+Given a time in -hour AM/PM format, convert it to military (24-hour) time.
+
+Note: - 12:00:00AM on a 12-hour clock is 00:00:00 on a 24-hour clock.
+- 12:00:00PM on a 12-hour clock is 12:00:00 on a 24-hour clock.
+
+Example
+
+
+Return '12:01:00'.
+
+
+Return '00:01:00'.
+
+Function Description
+
+Complete the  function with the following parameter(s):
+
+: a time in  hour format
+Returns
+
+: the time in  hour format
+Input Format
+
+A single string  that represents a time in -hour clock format (i.e.:  or ).
+
+Constraints
+
+All input times are valid
+Sample Input 0
+
+07:05:45PM
+Sample Output 0
+
+19:05:45
+SOLUTION:
+class Result {
+
+    public static String timeConversion(String s) {
+  
+    String period = s.substring(8);     // AM or PM
+    int hour = Integer.parseInt(s.substring(0, 2));
+    String rest = s.substring(2, 8);    // :mm:ss
+
+    if (period.equals("AM")) {
+        if (hour == 12) {
+            hour = 0;  // midnight case
+        }
+    } else { // PM
+        if (hour != 12) {
+            hour += 12;
+        }
+    }
+
+    return String.format("%02d%s", hour, rest);
+}
+
+
+    }
+
+TASK6:
+MOVES ZEROES:
+Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Note that you must do this in-place without making a copy of the array.
+
+ 
+
+Example 1:
+
+Input: nums = [0,1,0,3,12]
+Output: [1,3,12,0,0]
+Example 2:
+
+Input: nums = [0]
+Output: [0]
+
+SOLUTION:
+import java.util.*;
+
+public class Solution {
+
+    public static void moveZeroes(int[] nums) {
+        int index = 0; // position to place next non-zero
+
+        // Move all non-zero elements forward
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                nums[index] = nums[i];
+                index++;
+            }
+        }
+
+        // Fill remaining positions with zeros
+        while (index < nums.length) {
+            nums[index] = 0;
+            index++;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {0, 1, 0, 3, 12};
+
+        moveZeroes(nums);
+
+        System.out.println(Arrays.toString(nums));
+    }
+}
+
+ TASK7:
+Diagonal Difference:
+
+
+Given a square matrix, calculate the absolute difference between the sums of its diagonals.
+
+For example, the square matrix  is shown below:
+
+1 2 3
+4 5 6
+9 8 9  
+The left-to-right diagonal = .
+The right-to-left diagonal = .
+Their absolute difference is .
+
+Function description
+
+Complete the  function with the following parameter:
+
+: a 2-D array of integers
+Return
+
+: the absolute difference in sums along the diagonals
+Input Format
+
+The first line contains a single integer, , the number of rows and columns in the square matrix .
+Each of the next  lines describes a row, , and consists of  space-separated integers .
+
+Constraints
+
+Sample Input
+
+STDIN      Function
+-----      --------
+3           arr[][] sizes n = 3, m = 3
+11 2 4     arr = [[11, 2, 4], [4, 5, 6], [10, 8, -12]]
+4 5 6
+10 8 -12
+Sample Output
+
+15
+SOLUTION:
+class Result {
+
+    /*
+     * Complete the 'diagonalDifference' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+     */
+
+    public static int diagonalDifference(List<List<Integer>> arr) {
+   int n = arr.size();
+        int primary = 0, secondary = 0;
+
+        for (int i = 0; i < n; i++) {
+            primary += arr.get(i).get(i);
+            secondary += arr.get(i).get(n - 1 - i);
+        }
+
+        return Math.abs(primary - secondary);
+    }
+
+}
+TASK8:
+Given a 2D integer array matrix, return the transpose of matrix.
+
+The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+
+
+
+ 
+
+Example 1:
+
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [[1,4,7],[2,5,8],[3,6,9]]
+Example 2:
+
+Input: matrix = [[1,2,3],[4,5,6]]
+Output: [[1,4],[2,5],[3,6]]
+ 
+
+Constraints:
+
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 1000
+1 <= m * n <= 105
+-109 <= matrix[i][j] <= 109
+
+SOLUTION:
+class Solution {
+    public int[][] transpose(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int[][] result = new int[n][m];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                result[j][i] = matrix[i][j];
+            }
+        }
+
+        return result;
+    }
+}
+ TASK9:
+Given a m x n matrix mat and an integer k, return a matrix answer where each answer[i][j] is the sum of all elements mat[r][c] for:
+
+i - k <= r <= i + k,
+j - k <= c <= j + k, and
+(r, c) is a valid position in the matrix.
+ 
+
+Example 1:
+
+Input: mat = [[1,2,3],[4,5,6],[7,8,9]], k = 1
+Output: [[12,21,16],[27,45,33],[24,39,28]]
+Example 2:
+
+Input: mat = [[1,2,3],[4,5,6],[7,8,9]], k = 2
+Output: [[45,45,45],[45,45,45],[45,45,45]]
+ 
+
+Constraints:
+
+m == mat.length
+n == mat[i].length
+1 <= m, n, k <= 100
+1 <= mat[i][j] <= 100
+
+SOLUTION:
+class Solution {
+    public int[][] matrixBlockSum(int[][] mat, int k) {
+        int m = mat.length;
+        int n = mat[0].length;
+
+        int[][] prefix = new int[m + 1][n + 1];
+
+        // Build prefix sum
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                prefix[i][j] = mat[i-1][j-1]
+                        + prefix[i-1][j]
+                        + prefix[i][j-1]
+                        - prefix[i-1][j-1];
+            }
+        }
+
+        int[][] answer = new int[m][n];
+
+        // Calculate block sums
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+
+                int r1 = Math.max(0, i - k);
+                int c1 = Math.max(0, j - k);
+                int r2 = Math.min(m - 1, i + k);
+                int c2 = Math.min(n - 1, j + k);
+
+                answer[i][j] =
+                        prefix[r2 + 1][c2 + 1]
+                      - prefix[r1][c2 + 1]
+                      - prefix[r2 + 1][c1]
+                      + prefix[r1][c1];
+            }
+        }
+
+        return answer;
+    }
+}
+TASK 10:
+You are given a 2D matrix of dimension  and a positive integer . You have to rotate the matrix  times and print the resultant matrix. Rotation should be in anti-clockwise direction.
+
+Rotation of a  matrix is represented by the following figure. Note that in one rotation, you have to shift elements by one step only.
+
+matrix-rotation
+
+It is guaranteed that the minimum of m and n will be even.
+
+As an example rotate the Start matrix by 2:
+
+    Start         First           Second
+     1 2 3 4       2  3  4  5      3  4  5  6
+    12 1 2 5  ->   1  2  3  6 ->   2  3  4  7
+    11 4 3 6      12  1  4  7      1  2  1  8
+    10 9 8 7      11 10  9  8     12 11 10  9
+Function Description
+
+Complete the matrixRotation function in the editor below.
+
+matrixRotation has the following parameter(s):
+
+int matrix[m][n]: a 2D array of integers
+int r: the rotation factor
+Prints
+It should print the resultant 2D integer array and return nothing. Print each row on a separate line as space-separated integers.
+
+Input Format
+
+The first line contains three space separated integers, , , and , the number of rows and columns in , and the required rotation.
+The next  lines contain  space-separated integers representing the elements of a row of .
+
+Constraints
+
+
+
+
+
+Sample Input
+
+Sample Input #01
+
+STDIN        Function
+-----        --------
+4 4 2        rows m = 4, columns n = 4, rotation factor r = 2
+1 2 3 4      matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+5 6 7 8
+9 10 11 12
+13 14 15 16
+Sample Output #01
+
+3 4 8 12
+2 11 10 16
+1 7 6 15
+5 9 13 14
+Explanation #01
+
+The matrix is rotated through two rotations.
+
+     1  2  3  4      2  3  4  8      3  4  8 12
+     5  6  7  8      1  7 11 12      2 11 10 16
+     9 10 11 12  ->  5  6 10 16  ->  1  7  6 15
+    13 14 15 16      9 13 14 15      5  9 13 14
+Sample Input #02
+
+5 4 7
+1 2 3 4
+7 8 9 10
+13 14 15 16
+19 20 21 22
+25 26 27 28
+Sample Output #02
+
+28 27 26 25
+22 9 15 19
+16 8 21 13
+10 14 20 7
+4 3 2 1
+Explanation 02
+
+The various states through 7 rotations:
+
+    1  2  3  4      2  3  4 10    3  4 10 16    4 10 16 22
+    7  8  9 10      1  9 15 16    2 15 21 22    3 21 20 28
+    13 14 15 16 ->  7  8 21 22 -> 1  9 20 28 -> 2 15 14 27 ->
+    19 20 21 22    13 14 20 28    7  8 14 27    1  9  8 26
+    25 26 27 28    19 25 26 27    13 19 25 26   7 13 19 25
+
+    10 16 22 28    16 22 28 27    22 28 27 26    28 27 26 25
+     4 20 14 27    10 14  8 26    16  8  9 25    22  9 15 19
+     3 21  8 26 ->  4 20  9 25 -> 10 14 15 19 -> 16  8 21 13
+     2 15  9 25     3 21 15 19     4 20 21 13    10 14 20  7
+     1  7 13 19     2  1  7 13     3  2  1  7     4  3  2  1
+Sample Input #03
+
+2 2 3
+1 1
+1 1
+Sample Output #03
+
+1 1
+1 1
+Explanation #03
+
+All of the elements are the same, so any rotation will repeat the same matrix.
+
+SOLUTION:
+class Result {
+
+    /*
+     * Complete the 'diagonalDifference' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+     */
+
+    public static int diagonalDifference(List<List<Integer>> arr) {
+   int n = arr.size();
+        int primary = 0, secondary = 0;
+
+        for (int i = 0; i < n; i++) {
+            primary += arr.get(i).get(i);
+            secondary += arr.get(i).get(n - 1 - i);
+        }
+
+        return Math.abs(primary - secondary);
+    }
+
+}
+
+
